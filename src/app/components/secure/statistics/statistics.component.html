@@ -1,0 +1,129 @@
+<nav class="navbar   " style="background-color: darkslategrey">
+  <a   class="navbar-brand" href="/">  <img src=" ../../../../assets/img/logo_light.png" height= "auto" width="300" >  </a>
+  <div style="display: inline-block; float: right">
+    <button type="button"  class ="btn btn-outline-light mr-1"  (click)="backClicked()">{{'back'| translate}}</button>
+    <button (click)="auth.logoutUser()"    class="btn btn-outline-success  float-right " type="submit"  data-toggle="modal" data-target="#exampleModalCenter" > Log out</button>
+
+  </div>
+
+</nav>
+<!--
+<h4 align="center" >
+  <br>
+  Statistics №   {{id}}
+</h4>
+-->
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<div class="container-fluid mt-3" style="width: 80%">
+  <div class="row">
+    <div class="col-md-3">Petrovich
+<br>
+      <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+          <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+            <div class="ui-grid-row">
+            </div>
+              <div class="ui-grid-col-12">
+                <p-dropdown [options]="hand" formControlName="hand" [autoWidth]="false"></p-dropdown>
+              </div>
+              <div class="ui-grid-col-12">
+                <p-message severity="error" text="Gender is required" *ngIf="!userform.controls['hand'].valid&&userform.controls['hand'].dirty"></p-message>
+              </div>
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+              <div class="ui-g-12"><p-checkbox name="group1" value= "1" label="Left turn" [formControl]="userform.controls['training_type']"  inputId="ny"></p-checkbox></div>
+              <div class="ui-g-12"><p-checkbox name="group1" value= "2" label="Right turn"   [formControl]="userform.controls['training_type']" inputId="sf"></p-checkbox></div>
+            </div>
+            Period:
+<br>
+            <div class="ui-g" style="width:250px;margin-bottom:10px">
+              <div class="ui-g-12"><p-radioButton name="group2" value="day" label="day" formControlName="val" inputId="preopt1"></p-radioButton></div>
+              <div class="ui-g-12"><p-radioButton name="group2" value="week" label="week" formControlName="val" inputId="preopt2"></p-radioButton></div>
+              <div class="ui-g-12"><p-radioButton name="group2" value="all time" label="all time" formControlName="val" inputId="preopt3"></p-radioButton></div>
+              <div class="ui-g-12"><p-radioButton name="group2" value="custom" label="custom" formControlName="val" inputId="preopt3">
+
+
+              </p-radioButton>
+              </div>
+
+              <div *ngIf="this.userform.value.val === 'custom'">
+                <br>First: <br>
+from:<br>
+                <p-inputMask  pInputText id="from" mask="9999/99/99" formControlName="from"  placeholder="2010/10/10" >
+                </p-inputMask>
+
+                <br> to:
+                <p-inputMask  pInputText id="to" mask="9999/99/99" formControlName="to"   placeholder="2010/10/10" >
+                </p-inputMask>
+                <br>
+                Second:<br>
+                from:<br>
+                <p-inputMask  pInputText id="from2" mask="9999/99/99" formControlName="from2"  placeholder="2010/10/10" >
+                </p-inputMask>
+                <br> to:
+                <p-inputMask  pInputText id="to2" mask="9999/99/99" formControlName="to2"   placeholder="2010/10/10" >
+                </p-inputMask>
+              </div>
+            </div>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-6">
+                <button pButton type="button" label="drop" class="ui-button-danger"   (click)="reset()" ></button>
+              </div>
+            </div>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-6">
+                <button pButton type="submit" label="Add diagramm" [disabled]="!userform.valid"></button>
+              </div>
+            </div>
+          </div>
+      </form>
+<br>
+    </div>
+    <div class="col-md-9">
+      <p-chart type="line"   [data]="data"  (onDataSelect)="selectData($event)"></p-chart>
+    </div>
+  </div>
+  <br>
+  <!--
+  <h4 align="center">data graph</h4>
+
+
+    <div *ngIf="this.body_graph">
+
+     <table class="table" >
+       <thead >
+       <tr>
+         <th scope="col">#</th>
+         <th scope="col">training type</th>
+         <th scope="col">Hand</th>
+         <th scope="col">Value</th>
+       </tr>
+
+       <tbody style="overflow-x: auto; width: 100%"  >
+       <tr *ngFor="let graphic of body_graph?.graphic; let i = index" >
+         <th scope="row">{{i +1}}</th>
+         <td> {{graphic.training_type}}</td>
+         <td> {{graphic.hand}}</td>
+         <td *ngFor="let val of graphic?.value; let j = index">
+           {{j+1+')'}}
+           b1:{{val.b1}}
+           <br>
+           b2:{{val.b2}}
+           <br>
+           b3:{{val.b3}}
+           <br>
+           b4:{{val.b4}}
+           <br>
+           oX:{{val.oX}}
+           <br>
+           oY:{{val.oY}}
+           <br>
+           oZ:{{val.oZ}}
+
+         </td>
+       </tr>
+       </tbody>
+    </table>
+
+  </div> -->
+</div>
+
+

@@ -1,0 +1,14 @@
+input, p-inputMask {
+  border: none; outline: none;
+  border-bottom: 1px solid gray;
+  width: 100%;
+
+}
+.word_wrap{
+
+  word-wrap: break-word;
+}
+.file-field.big .file-path-wrapper {
+  height: 3.2rem; }
+.file-field.big .file-path-wrapper .file-path {
+  height: 3rem; }

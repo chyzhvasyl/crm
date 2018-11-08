@@ -1,0 +1,14 @@
+
+{
+  "apiPrefix": "http://35.171.86.243:8090",
+  "serverPort": "8090",
+  "db":
+  {
+    "database": "mongodb://superuser:65468dassfgdfgae@35.171.86.243:27017/rehabilitation",
+    "name": "rehabilitation",
+    "host": "35.171.86.243",
+    "port": 27017
+  }
+}
+
+

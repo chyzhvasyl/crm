@@ -1,0 +1,11 @@
+{
+  "apiPrefix": "http://localhost:8090",
+  "serverPort": "8090",
+  "db":
+  {
+    "database": "mongodb://localhost:27017/rehabilitation",
+    "name": "rehabilitation",
+    "host": "localhost",
+    "port": 27017
+  }
+}

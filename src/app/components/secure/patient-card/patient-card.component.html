@@ -1,0 +1,196 @@
+<nav class="navbar   " style="background-color: darkslategrey">
+  <a   class="navbar-brand"  (click)="backClicked()">  <img src=" ../../../../assets/img/logo_light.png" height= "auto" width="300" >  </a>
+<div style="display: inline-block; float: right">
+
+    <div  class="btn-group dropleft mr-5">
+      <button class="btn btn-success dropdown-toggle    " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{'language'| translate}}
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button  class="dropdown-item" (click)="switchLanguage('en')">english</button>
+        <button  class="dropdown-item" (click)="switchLanguage('rus')">русский</button>
+      </div>
+    </div>
+
+
+  <button type="button"  class ="btn btn-outline-light mr-1"  (click)="backClicked()">{{'back'| translate}}</button>
+  <button (click)="auth.logoutUser()"    class="btn btn-outline-success  float-right " type="submit"  data-toggle="modal" data-target="#exampleModalCenter" >{{'exit'| translate}}</button>
+
+</div>
+
+</nav>
+<!--
+<p-fileUpload  (change)="fileChange($event, id)" name="data[]" customUpload="true"   class=" float-right m-1 "      maxFileSize="1000000" (onBeforeUpload)="showSuccess()" chooseLabel="Upload file"></p-fileUpload>
+
+-->
+<div class="mt-3">
+<a [routerLink]="['/statistics' , id]" class="btn btn-secondary float-right m-1">{{'stat'| translate}}</a>
+<button type="button" (click)="edit($event)" class="btn btn-info float-right m-1">{{'edit'| translate}}</button>
+
+
+  <div class="input-group  float-right m-1" style="max-width: 400px">
+
+
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">{{'upload'| translate}}</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" (change)="fileChange($event, id)"     class="custom-file-input" name="graph" accept=" .json" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label"    for="inputGroupFile01">{{'choose'| translate}}</label>
+  </div>
+</div>
+
+
+
+
+
+ <!-- <form name="form" (ngSubmit)="fileChange(id)" #f="ngForm" novalidate>
+    <input type="file" name="graph" (change)="addPhoto($event)"/>
+    <button type="submit">Отправить</button>
+  </form> -->
+</div>
+
+<!-- col._id -->
+<div *ngIf="patient"   class="container mt-5 word_wrap"  >
+  <h4 align="center" >
+    {{'medical'| translate}}  {{patient.fullname}}
+  </h4>
+  <div  class="container  mt-3 ">
+    <div class="row">
+      <div class="col-sm-12">
+<div class="row">
+  <div class="col-sm-10">
+    <div class="row">
+      <div class="col-sm-2 mt-1"><b>  {{'name'| translate}} </b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">{{patient.fullname}}</div>
+      <div class="col-sm-2 mt-1"><b>{{'status'| translate}} </b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">{{patient.status}}</div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-2 mt-1"><b>{{'birth_date'| translate}}</b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">-</div>
+      <div class="col-sm-2 mt-1"><b>{{'datein'| translate}}</b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px"> {{patient.date_in}}</div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-2 mt-1"><b>{{'age'| translate}} </b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">{{patient.birthdate }}</div>
+      <div class="col-sm-2 mt-1"><b>{{'dateout'| translate}} </b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px"> {{patient.date_out}}</div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-2 mt-1"><b>{{'sex'| translate}} </b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">{{patient.sex}}</div>
+      <div class="col-sm-2 mt-1"><b>{{'des'| translate}} </b></div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">{{patient.desease}}</div>
+
+    </div>
+
+  </div>
+  <div class="col-sm-2">
+    <img width="200px" class="img-fluid" src="../../../../assets/img/international_pass_selfie.png">
+  </div>
+</div>
+
+
+
+</div>
+
+    </div>
+
+
+
+  </div>
+  <br> <br><br><br><br>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-sm-12"><b>{{'desc'| translate}}</b></div>
+    </div>
+  </div>
+  <div    class="container">
+    <div class="row">
+      <div class="col-sm-12" style="background-color: whitesmoke; border-radius: 5px; ">  {{patient.description}}</div>
+    </div>
+  </div>
+</div>
+
+<p-dialog *ngIf="patient"  header="Editing" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
+  <div class="ui-g ui-fluid" *ngIf="patient" >
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Name"> {{'name'| translate}}</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="Name" pKeyFilter="alpha" placeholder="Put fullname" [(ngModel)]="patient.fullname" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Desease">{{'des'| translate}}</label>
+      </div>
+      <div class="ui-g-8">
+        <input   pKeyFilter="alpha" placeholder="Put desease" pInputText id="Desease" [(ngModel)]="patient.desease" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Date in">{{'datein'| translate}}</label>
+      </div>
+      <div class="ui-g-8"   >
+        <input  pInputText id="Date in"  placeholder="10/10/2010" [(ngModel)]="patient.date_in"  />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Date_out">{{'dateout'| translate}}</label>
+      </div>
+      <div class="ui-g-8"  >
+        <input  pInputText id="Date_out"   placeholder="10/10/2010" [(ngModel)]="patient.date_out" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Status">{{'status'| translate}}</label>
+      </div>
+      <div class="ui-g-8">
+        <input pKeyFilter="alpha" placeholder="Put the status" pInputText id="Status" [(ngModel)]="patient.status" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Age">{{'age'| translate}}</label>
+      </div>
+      <div class="ui-g-8">
+        <input  pKeyFilter="int" pInputText id="Age" placeholder="Put the age" [(ngModel)]="patient.birthdate" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Sex">{{'sex'| translate}}</label>
+      </div>
+      <div class="ui-g-8">
+        <input pKeyFilter="alpha" placeholder="Put the sex" pInputText id="Sex" [(ngModel)]="patient.sex" />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="Description">{{'desc'| translate}}</label>
+      </div>
+      <div class="ui-g-8">
+        <!--<input pKeyFilter="alpha" placeholder="Put description" pInputText id="Description" [(ngModel)]="patient.description" /> -->
+        <textarea style="resize: none; height: 80px" pInputTextarea type="text" placeholder="Put description"  pInputText id="Description" [(ngModel)]="patient.description" ></textarea>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-check" (click)="save( )" label="Save"></button>
+
+    </div>
+  </p-footer>
+</p-dialog>
+<p-toast [style]="{marginTop: '180px'}" position="top-right"    ></p-toast>

@@ -1,0 +1,269 @@
+<nav class="navbar   " style="background-color: darkslategrey">
+  <a   class="navbar-brand" href="/">  <img class=" img-fluid" src=" ../../../../assets/img/logo_light.png" height= "auto" width="300px" >  </a>
+  <div class="form-inline" >
+    <div  class="btn-group dropleft mr-3">
+      <button class="btn btn-success dropdown-toggle    " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{'language'| translate}}
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button  class="dropdown-item" (click)="switchLanguage('en')">english</button>
+        <button  class="dropdown-item" (click)="switchLanguage('rus')">русский</button>
+      </div>
+    </div>
+    <button (click)="auth.logoutUser()"  *ngIf="auth.loggedIn()"  class="btn btn-outline-success  float-right " type="submit"  data-toggle="modal" data-target="#exampleModalCenter" > {{'exit' | translate}}</button>
+  </div>
+
+</nav>
+ <div class=" mt-1">
+<nav  class="mt-3">
+ <!-- <p-fileUpload    class=" float-right m-1" mode="basic" name="demo[]" url="./upload.php" accept="image/*" maxFileSize="1000000" (onBeforeUpload)="showSuccess()" chooseLabel="Upload file"></p-fileUpload>
+
+  -->
+  <!-- доделать кнопку -->
+  <button  (click)=" delete()"  [disabled]="!selectedPatient3"   class="btn btn-secondary  float-right m-1" type="button"  data-toggle="modal" data-target="#exampleModalCenter" >{{'delete' | translate}}</button>
+  <button (click)="showDialogToAdd()"   class="btn btn-success float-right m-1" type="button"  data-toggle="modal" data-target="#exampleModalCenter" > {{'Addpatient' | translate}}</button>
+  <p-confirmDialog></p-confirmDialog>
+
+  <div class="input-group  float-right m-1" style="max-width: 400px">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroupFileAddon01">{{'upload'| translate}}</span>
+    </div>
+    <div class="custom-file">
+      <input type="file" (change)="fileChange($event, id)"     class="custom-file-input" name="graph" accept=" .json" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+      <label class="custom-file-label" for="inputGroupFile01">{{'choose'| translate}}</label>
+    </div>
+  </div>
+
+</nav>
+
+   <br>
+   <br>
+
+
+
+   <div *ngIf = "!patients">
+
+<h2 align="center" style="margin-top: 15%"> Loading...</h2>
+
+   </div>
+   <div *ngIf = "patients">{{'patients' | translate}}: {{patients.length}}
+
+   <div><h3 align="center">{{'list' | translate}}</h3>
+
+   </div>
+<p-table #dt exportFilename="file_name"    [paginator]="true" [rows]="10" [columns]="cols" [value]="patients" [(selection)]="selectedPatient3"  [resizableColumns]="true" dataKey="_id" (sortFunction)="customSort($event)" [customSort]="true" [responsive]="true"      >
+  <!-- [loading]="loading" [lazy]="true" (onLazyLoad)="loadCarsLazy($event) " [totalRecords]="totalRecords" -->
+
+  <ng-template pTemplate="caption">
+    <div class="ui-helper-clearfix">
+      <button type="button"   class="btn btn-light"  label="All export"  (click)="dt.exportCSV()" style="float:left">{{'allexp' | translate}}</button>
+      <button type="button"  class="btn btn-light"  label="Selected export" (click)="dt.exportCSV({selectionOnly:true})" style="float:right">{{'selectexport' | translate}}</button>
+    </div>
+    <div style="text-align: left" class="mt-1">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:25%">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th style="width: 5%">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th *ngFor="let i = index; let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"  let-col let-emp="rowData" >
+
+
+
+
+
+
+    <tr [pSelectableRow]="rowData"  [pSelectableRowIndex]="rowIndex">
+      <td >
+        <p-tableCheckbox     [value]="rowData"></p-tableCheckbox>
+        {{rowIndex + 1}}
+       </td>
+      <td >
+      <a  [routerLink]="['/patient-card', col._id]"  >{{col.fullname }}  </a>
+      </td>
+      <td >
+        {{col.birthdate}}
+      </td>
+      <td >
+        {{col.status}}
+      </td>
+      <td>
+        {{col.desease}}
+      </td>
+      <td >
+        {{col.date_in}}
+      </td>
+      <td >
+        {{col.date_out}}
+      </td>
+      <td >
+        {{col.sex}}
+      </td>
+      <td>
+        {{col.description}}
+      </td>
+  </ng-template>
+  <ng-template pTemplate="summary"  >
+    <ul *ngIf="patients">
+      <li *ngIf=" selectedPatient3" style="text-align: left">
+
+      Selected {{ selectedPatient3.length}}
+      </li>
+    </ul>
+  </ng-template>
+</p-table>
+
+   </div>
+
+   <p-dialog *ngIf="patient" header="New Patient" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
+
+
+     <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value )"   >
+
+         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid"  >
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Name:
+             </div>
+             <div class="ui-grid-col-10">
+               <input pInputText type="text" formControlName="fullname"   placeholder="Put fullname" required  />
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" [text]="userform.controls['fullname'].errors['required'] ? 'Name is required' : userform.controls['fullname'].errors['minlength'] ? 'Must be longer than 1 characters' : ''"
+                        *ngIf="!userform.controls['fullname'].valid&&userform.controls['fullname'].dirty"></p-message>
+           </div>
+
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Diseases:
+             </div>
+             <div class="ui-grid-col-10">
+               <input pInputText type="text"    placeholder="Put desease" formControlName="desease"   />
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12 ">
+             <p-message severity="error" [text]="userform.controls['desease'].errors['required'] ? 'Desease is required' : userform.controls['desease'].errors['minlength'] ? 'Must be longer than 3 characters' : ''"
+                        *ngIf="!userform.controls['desease'].valid&&userform.controls['desease'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Date in:
+             </div>
+             <div class="ui-grid-col-10" style="">
+               <p-inputMask style="" pInputText   mask="99/99/9999" placeholder="10/10/2010"  formControlName="date_in" >
+               </p-inputMask>
+             </div>
+
+
+
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="Date is required" *ngIf="!userform.controls['date_in'].valid&&userform.controls['date_in'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Date out:
+             </div>
+             <div class="ui-grid-col-10">
+
+               <p-inputMask   pInputText id="date_out" mask="99/99/9999" formControlName="date_out"   placeholder="10/10/2010">
+               </p-inputMask>
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="Date is required" *ngIf="!userform.controls['date_out'].valid&&userform.controls['date_out'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Status:
+             </div>
+             <div class="ui-grid-col-10">
+               <input pInputText type="text" pKeyFilter="alpha" placeholder="Put the status" formControlName="status"    />
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" [text]="userform.controls['status'].errors['required'] ? 'Status is required' : userform.controls['status'].errors['minlength'] ? 'Must be longer than 3 characters' : ''"
+                        *ngIf="!userform.controls['status'].valid&&userform.controls['status'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Birthdate:
+             </div>
+             <div class="ui-grid-col-10">
+               <p-inputMask     mask="99/99/9999"  id="birthdate" placeholder="10/10/2010" pInputText type="text" formControlName="birthdate">     </p-inputMask>
+
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="birthdate is required" *ngIf="!userform.controls['birthdate'].valid&&userform.controls['birthdate'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Sex
+             </div>
+             <div class="ui-grid-col-10">
+               <p-dropdown pKeyFilter="alpha"   [options]="sex" formControlName="sex" [autoWidth]="false"  ></p-dropdown >
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="Sex is required" *ngIf="!userform.controls['sex'].valid&&userform.controls['sex'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               Description:
+             </div>
+             <div class="ui-grid-col-10">
+
+               <textarea style="resize: none; height: 80px" pInputTextarea type="text" placeholder="Put description"  formControlName="description" ></textarea>
+             </div>
+           </div>
+
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2"></div>
+             <div class="ui-grid-col-6">
+               <button pButton type="submit" label="Add"   [disabled]="!userform.valid"></button>
+             </div>
+             <div class="ui-grid-col-4"></div>
+           </div>
+
+          </div>
+
+      </form>
+<!--
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="submit" pButton icon="fa fa-check"  label="Save"></button>
+
+
+        </div>
+
+      </p-footer>
+-->
+
+    </p-dialog>
+
+   <p-toast position="bottom-right"    ></p-toast>
+
+</div>
+
+
+<br><br>
+<br>

@@ -1,0 +1,70 @@
+Колекція doctors -> id_patient
+------------------------------
+id_doctor
+fio
+photo_doctor
+login
+password
+
+
+Колекція patients
+------------------------
+id_patient
+fio
+photo_patient
+birthdate
+status
+sex
+description
+
+
+Колекція action
+-------------------------
+action -> id_patient
+id_patient
+date_in
+date_out
+type
+diagnosis
+description
+
+
+Колекція session
+------------------------
+id_doctor
+id_patient
+hand
+training_type
+started_time
+value:
+    b1
+    b2
+    b3
+    b4
+    b5
+    b6
+    oX
+    oY
+    oZ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+db.patient.insertOne({fullname: "Tom", doctor_photo: 001000000111000001101000011011110111010001101111, birthdate:  ,
+status: "in progress", sex: "male", description: "alalalalallaala", doctor: new DBRef('doctor', Petrovich._id)})
+
+
+steve =  ({fullname: "Chyzh", patient_photo: 001000000111000001101000011011110111010001101111, birthdate:  29/07/2007
+
+

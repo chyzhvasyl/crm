@@ -1,0 +1,52 @@
+{
+  "button": "Private",
+  "text": "Welcome",
+"exit": "logout",
+  "patients":"patients",
+  "list":"List of patients",
+  "delete":"Delete patient",
+  "Addpatient":"Add patient",
+  "upload":"Upload file",
+  "choose":"Choose file for uploading",
+  "allexp":"All export  ",
+  "selectexport":"Selected export",
+  "medical":"Medical card by",
+  "name":"Name",
+  "age":"Age",
+  "sex":"Sex",
+  "datein":"Date in",
+  "dateout":"Date out",
+  "desc":"Patient description",
+  "back":"Back",
+  "stat":"Statistics",
+  "edit":"Edit",
+  "des":"Desease",
+  "status":"Status",
+  "language":"english",
+  "article": "  Raccoon.Recovery is an interactive therapy and analyzing tool for hand rehabilitation enabled by AI and ML algorithms. Solution allows: - automatically doing screening tests - automatically creating gaming-based treatment programs for patients - maintaining a single patient base - getting analytics of treatment process - getting comparison of different rehabilitation methodologies - seeing the progress of patient remotely Raccoon.Recovery was created to save your time on meaningful work and give you a possibility to treat more patients at the same time.",
+
+
+
+  "personal":"Personal account",
+  "mail":"Mail",
+  "pass":"Password",
+  "alram":"Nobody must knows your mail",
+  "alarmpass":"Nobody must knows your password",
+  "Update password":"Forgot Password",
+  "sign":"Sign in",
+
+
+
+  "checklog":"Incorrect login",
+  "checkpass":"Incorrect password",
+  "incorrrect":"* Incorrect login or password",
+
+
+
+
+  "recovering_password": "Password recovery",
+  "description_recovery": "Do not worry. Just enter your account email address and we will send the recovery link directly to your inbox.",
+  "submit_button": "Submit",
+  "to_main": "To general",
+  "birth_date": "Birth Date"
+}

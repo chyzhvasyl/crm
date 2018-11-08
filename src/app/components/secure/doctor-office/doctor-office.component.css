@@ -1,0 +1,6 @@
+.ui-grid input, p-inputMask {
+   border: none; outline: none;
+  border-bottom: 1px solid gray;
+  width: 100%;
+
+}
