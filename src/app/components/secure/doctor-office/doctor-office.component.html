@@ -21,7 +21,7 @@
 
   -->
   <!-- доделать кнопку -->
-  <button  (click)=" delete()"  [disabled]="!selectedPatient3"   class="btn btn-secondary  float-right m-1" type="button"  data-toggle="modal" data-target="#exampleModalCenter" >{{'delete' | translate}}</button>
+  <button  (click)=" delete()"  [disabled]="!selectedPatient3.length"   class="btn btn-secondary  float-right m-1" type="button"  data-toggle="modal" data-target="#exampleModalCenter" >{{'delete' | translate}}</button>
   <button (click)="showDialogToAdd()"   class="btn btn-success float-right m-1" type="button"  data-toggle="modal" data-target="#exampleModalCenter" > {{'Addpatient' | translate}}</button>
   <p-confirmDialog></p-confirmDialog>
 
@@ -117,7 +117,7 @@
     <ul *ngIf="patients">
       <li *ngIf=" selectedPatient3" style="text-align: left">
 
-      Selected {{ selectedPatient3.length}}
+        {{'selected' | translate}} {{ selectedPatient3.length}}
       </li>
     </ul>
   </ng-template>
@@ -125,7 +125,7 @@
 
    </div>
 
-   <p-dialog *ngIf="patient" header="New Patient" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
+   <p-dialog *ngIf="patient" [header] = 'new_patient' [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
 
 
      <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value )"   >
@@ -133,7 +133,7 @@
          <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid"  >
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Name:
+               {{'name' | translate}}:
              </div>
              <div class="ui-grid-col-10">
                <input pInputText type="text" formControlName="fullname"   placeholder="Put fullname" required  />
@@ -147,7 +147,7 @@
 
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Diseases:
+               {{'des' | translate}}:
              </div>
              <div class="ui-grid-col-10">
                <input pInputText type="text"    placeholder="Put desease" formControlName="desease"   />
@@ -160,7 +160,7 @@
            </div>
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Date in:
+               {{'datein' | translate}}:
              </div>
              <div class="ui-grid-col-10" style="">
                <p-inputMask style="" pInputText   mask="99/99/9999" placeholder="10/10/2010"  formControlName="date_in" >
@@ -176,7 +176,7 @@
            </div>
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Date out:
+               {{'dateout' | translate}}:
              </div>
              <div class="ui-grid-col-10">
 
@@ -190,7 +190,7 @@
            </div>
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Status:
+               {{'status' | translate}}:
              </div>
              <div class="ui-grid-col-10">
                <input pInputText type="text" pKeyFilter="alpha" placeholder="Put the status" formControlName="status"    />
@@ -203,7 +203,7 @@
            </div>
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Birthdate:
+               {{'birth_date' | translate}}:
              </div>
              <div class="ui-grid-col-10">
                <p-inputMask     mask="99/99/9999"  id="birthdate" placeholder="10/10/2010" pInputText type="text" formControlName="birthdate">     </p-inputMask>
@@ -216,7 +216,7 @@
            </div>
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Sex
+               {{'sex' | translate}}:
              </div>
              <div class="ui-grid-col-10">
                <p-dropdown pKeyFilter="alpha"   [options]="sex" formControlName="sex" [autoWidth]="false"  ></p-dropdown >
@@ -228,7 +228,7 @@
            </div>
            <div class="ui-grid-row">
              <div class="ui-grid-col-2">
-               Description:
+               {{'desc' | translate}}:
              </div>
              <div class="ui-grid-col-10">
 
@@ -239,7 +239,7 @@
            <div class="ui-grid-row">
              <div class="ui-grid-col-2"></div>
              <div class="ui-grid-col-6">
-               <button pButton type="submit" label="Add"   [disabled]="!userform.valid"></button>
+               <button pButton type="submit" [label]="Add"   [disabled]="!userform.valid"></button>
              </div>
              <div class="ui-grid-col-4"></div>
            </div>
@@ -263,7 +263,3 @@
    <p-toast position="bottom-right"    ></p-toast>
 
 </div>
-
-
-<br><br>
-<br>

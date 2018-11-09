@@ -19129,3 +19129,6 @@ GET /api/personal/5bd1d48a969923ea6bff0a04 200 5844 - 245.955 ms 08/Nov/2018:17:
 GET /api/personal/5bd1d48a969923ea6bff0a04 304 - - 254.561 ms 08/Nov/2018:17:37:24 +0000 1.1
 GET /api/personal/5bd1d48a969923ea6bff0a04 304 - - 237.209 ms 08/Nov/2018:17:37:40 +0000 1.1
 DELETE /api/delete_patient 200 2 - 0.143 ms 08/Nov/2018:17:37:51 +0000 1.1
+GET /socket.io/?EIO=3&transport=polling&t=MRvCM50 404 149 - 2.224 ms 09/Nov/2018:15:57:34 +0000 1.1
+GET /socket.io/?EIO=3&transport=polling&t=MRvCMQP 404 149 - 0.480 ms 09/Nov/2018:15:57:36 +0000 1.1
+GET /socket.io/?EIO=3&transport=polling&t=MRvCN9R 404 149 - 0.445 ms 09/Nov/2018:15:57:39 +0000 1.1

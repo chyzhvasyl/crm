@@ -48,5 +48,6 @@
   "description_recovery": "Do not worry. Just enter your account email address and we will send the recovery link directly to your inbox.",
   "submit_button": "Submit",
   "to_main": "To general",
-  "birth_date": "Birth Date"
+  "birth_date": "Birth Date",
+  "selected": "Selected"
 }
