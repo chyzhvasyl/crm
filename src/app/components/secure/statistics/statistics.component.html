@@ -1,8 +1,18 @@
 <nav class="navbar   " style="background-color: darkslategrey">
   <a   class="navbar-brand" href="/">  <img src=" ../../../../assets/img/logo_light.png" height= "auto" width="300" >  </a>
   <div style="display: inline-block; float: right">
+    <div  class="btn-group dropleft mr-3">
+      <button class="btn btn-success dropdown-toggle    " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{'language'| translate}}
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button  class="dropdown-item" (click)="switchLanguage('en')">english</button>
+        <button  class="dropdown-item" (click)="switchLanguage('rus')">русский</button>
+      </div>
+    </div>
     <button type="button"  class ="btn btn-outline-light mr-1"  (click)="backClicked()">{{'back'| translate}}</button>
-    <button (click)="auth.logoutUser()"    class="btn btn-outline-success  float-right " type="submit"  data-toggle="modal" data-target="#exampleModalCenter" > Log out</button>
+    <button (click)="auth.logoutUser()"    class="btn btn-outline-success  float-right " type="submit"  data-toggle="modal" data-target="#exampleModalCenter" >{{'exit' | translate}}</button>
 
   </div>
 
@@ -12,11 +22,26 @@
   <br>
   Statistics №   {{id}}
 </h4>
+
+"left_turn": "Left turn",
+
+
+  "right_turn": "Right turn",
+  "Period": "Period",
+  "day": "Day",
+  "week": "Week",
+  "alltime": "All time",
+  "custom": "Custom",
+  "drop": "Drop diagram",
+  "Add diagram": "Add diagram",
+  "from": "from",
+  "to": "First"
+
 -->
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <div class="container-fluid mt-3" style="width: 80%">
   <div class="row">
-    <div class="col-md-3">Petrovich
+    <div class="col-md-3">
 <br>
       <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
           <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
@@ -29,48 +54,49 @@
                 <p-message severity="error" text="Gender is required" *ngIf="!userform.controls['hand'].valid&&userform.controls['hand'].dirty"></p-message>
               </div>
             <div class="ui-g" style="width:250px;margin-bottom:10px">
-              <div class="ui-g-12"><p-checkbox name="group1" value= "1" label="Left turn" [formControl]="userform.controls['training_type']"  inputId="ny"></p-checkbox></div>
-              <div class="ui-g-12"><p-checkbox name="group1" value= "2" label="Right turn"   [formControl]="userform.controls['training_type']" inputId="sf"></p-checkbox></div>
+              <div class="ui-g-12"><p-checkbox name="group1" value= "1" [formControl]="userform.controls['training_type']"  inputId="ny"> </p-checkbox>{{'left_turn' | translate}}</div>
+              <div class="ui-g-12"><p-checkbox name="group1" value= "2"     [formControl]="userform.controls['training_type']" inputId="sf"></p-checkbox>{{'right_turn' | translate}}</div>
             </div>
-            Period:
+            {{'Period' | translate}}:
 <br>
             <div class="ui-g" style="width:250px;margin-bottom:10px">
-              <div class="ui-g-12"><p-radioButton name="group2" value="day" label="day" formControlName="val" inputId="preopt1"></p-radioButton></div>
-              <div class="ui-g-12"><p-radioButton name="group2" value="week" label="week" formControlName="val" inputId="preopt2"></p-radioButton></div>
-              <div class="ui-g-12"><p-radioButton name="group2" value="all time" label="all time" formControlName="val" inputId="preopt3"></p-radioButton></div>
-              <div class="ui-g-12"><p-radioButton name="group2" value="custom" label="custom" formControlName="val" inputId="preopt3">
+              <div class="ui-g-12"><p-radioButton name="group2" value="day"    formControlName="val" inputId="preopt1"></p-radioButton> {{'day' | translate}}</div>
+              <div class="ui-g-12"><p-radioButton name="group2" value="week"    formControlName="val" inputId="preopt2"></p-radioButton> {{'week' | translate}}</div>
+              <div class="ui-g-12"><p-radioButton name="group2" value="all time"  formControlName="val" inputId="preopt3"></p-radioButton> {{'alltime' | translate}}</div>
+              <div class="ui-g-12"><p-radioButton name="group2" value="custom"   formControlName="val" inputId="preopt3">
 
 
               </p-radioButton>
+                {{'custom' | translate}}
               </div>
 
               <div *ngIf="this.userform.value.val === 'custom'">
-                <br>First: <br>
-from:<br>
+                <br>{{'first' | translate}} <br>
+                {{'from' | translate}}:<br>
                 <p-inputMask  pInputText id="from" mask="9999/99/99" formControlName="from"  placeholder="2010/10/10" >
                 </p-inputMask>
 
-                <br> to:
+                <br> {{'to' | translate}}:
                 <p-inputMask  pInputText id="to" mask="9999/99/99" formControlName="to"   placeholder="2010/10/10" >
                 </p-inputMask>
                 <br>
-                Second:<br>
-                from:<br>
+                {{'second' | translate}}:<br>
+                {{'from' | translate}}:<br>
                 <p-inputMask  pInputText id="from2" mask="9999/99/99" formControlName="from2"  placeholder="2010/10/10" >
                 </p-inputMask>
-                <br> to:
+                <br> {{'to' | translate}}:
                 <p-inputMask  pInputText id="to2" mask="9999/99/99" formControlName="to2"   placeholder="2010/10/10" >
                 </p-inputMask>
               </div>
             </div>
             <div class="ui-grid-row">
               <div class="ui-grid-col-6">
-                <button pButton type="button" label="drop" class="ui-button-danger"   (click)="reset()" ></button>
+                <button pButton type="button"   class="ui-button-danger"   (click)="reset()" >{{'drop' | translate}}</button>
               </div>
             </div>
             <div class="ui-grid-row">
               <div class="ui-grid-col-6">
-                <button pButton type="submit" label="Add diagramm" [disabled]="!userform.valid"></button>
+                <button pButton type="submit"    [disabled]="!userform.valid">{{'Add_diagram' | translate}}</button>
               </div>
             </div>
           </div>
@@ -125,5 +151,3 @@ from:<br>
 
   </div> -->
 </div>
-
-

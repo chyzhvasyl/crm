@@ -49,5 +49,20 @@
   "submit_button": "Submit",
   "to_main": "To general",
   "birth_date": "Birth Date",
-  "selected": "Selected"
+  "left_turn": "Left turn",
+
+
+  "right_turn": "Right turn",
+  "Period": "Period",
+  "day": "Day",
+  "week": "Week",
+  "alltime": "All time",
+  "custom": "Custom",
+  "drop": "Drop diagram",
+  "Add_diagram": "Add diagram",
+  "from": "from",
+  "to": "to",
+  "first": "First",
+  "second": "Second"
+
 }

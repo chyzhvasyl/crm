@@ -1,3 +1,5 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <nav class="navbar   " style="background-color: darkslategrey">
   <a   class="navbar-brand"  (click)="backClicked()">  <img src=" ../../../../assets/img/logo_light.png" height= "auto" width="300" >  </a>
 <div style="display: inline-block; float: right">
@@ -70,14 +72,14 @@
     </div>
     <div class="row">
       <div class="col-sm-2 mt-1"><b>{{'birth_date'| translate}}</b></div>
-      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">-</div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">{{patient.birthdate }}</div>
       <div class="col-sm-2 mt-1"><b>{{'datein'| translate}}</b></div>
       <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px"> {{patient.date_in}}</div>
 
     </div>
     <div class="row">
       <div class="col-sm-2 mt-1"><b>{{'age'| translate}} </b></div>
-      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">{{patient.birthdate }}</div>
+      <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px">-</div>
       <div class="col-sm-2 mt-1"><b>{{'dateout'| translate}} </b></div>
       <div class="col-sm-4 mt-1" style="background-color: whitesmoke; border-radius: 5px"> {{patient.date_out}}</div>
 
@@ -95,15 +97,8 @@
     <img width="200px" class="img-fluid" src="../../../../assets/img/international_pass_selfie.png">
   </div>
 </div>
-
-
-
 </div>
-
     </div>
-
-
-
   </div>
   <br> <br><br><br><br>
   <div class="container">
@@ -111,14 +106,18 @@
       <div class="col-sm-12"><b>{{'desc'| translate}}</b></div>
     </div>
   </div>
-  <div    class="container">
+  <div   class="container">
     <div class="row">
-      <div class="col-sm-12" style="background-color: whitesmoke; border-radius: 5px; ">  {{patient.description}}</div>
+      <div [ngClass]="{substrate_more: visibility}" class="col-sm-12 substrate" >
+        {{patient.description}}
+      </div>
     </div>
   </div>
+  <a (click)="moreText()" >
+    <i class="material-icons float-right" style="font-size:28px">{{arrow}}</i></a>
 </div>
 
-<p-dialog *ngIf="patient"  header="Editing" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
+<p-dialog *ngIf="patient"  [header]="editing" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
   <div class="ui-g ui-fluid" *ngIf="patient" >
     <div class="ui-g-12">
       <div class="ui-g-4">
@@ -141,7 +140,7 @@
         <label for="Date in">{{'datein'| translate}}</label>
       </div>
       <div class="ui-g-8"   >
-        <input  pInputText id="Date in"  placeholder="10/10/2010" [(ngModel)]="patient.date_in"  />
+        <input  pInputText id="Date in"  placeholder="10.10.2010" [(ngModel)]="patient.date_in"  />
       </div>
     </div>
     <div class="ui-g-12">
@@ -149,7 +148,7 @@
         <label for="Date_out">{{'dateout'| translate}}</label>
       </div>
       <div class="ui-g-8"  >
-        <input  pInputText id="Date_out"   placeholder="10/10/2010" [(ngModel)]="patient.date_out" />
+        <input  pInputText id="Date_out"   placeholder="10.10.2010" [(ngModel)]="patient.date_out" />
       </div>
     </div>
     <div class="ui-g-12">
@@ -162,10 +161,10 @@
     </div>
     <div class="ui-g-12">
       <div class="ui-g-4">
-        <label for="Age">{{'age'| translate}}</label>
+        <label for="Age">{{'birthday'| translate}}</label>
       </div>
       <div class="ui-g-8">
-        <input  pKeyFilter="int" pInputText id="Age" placeholder="Put the age" [(ngModel)]="patient.birthdate" />
+        <input  pKeyFilter="int" pInputText id="Age"  placeholder="10.10.2010" [(ngModel)]="patient.birthdate" />
       </div>
     </div>
     <div class="ui-g-12">
@@ -194,3 +193,4 @@
   </p-footer>
 </p-dialog>
 <p-toast [style]="{marginTop: '180px'}" position="top-right"    ></p-toast>
+

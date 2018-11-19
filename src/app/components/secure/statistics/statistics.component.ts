@@ -8,6 +8,7 @@ import {DoctorDataService} from '../../../services/doctor-data.service';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../services/api/auth.service';
+import {TranslatingService} from "../../../services/translate.service";
 
 @Component({
   selector: 'app-statistics',
@@ -21,7 +22,7 @@ export class StatisticsComponent implements OnInit {
   body_graph: any;
   userform: FormGroup;
   submitted: boolean;
-  hand: SelectItem[];
+  hand: SelectItem[] = [];
   started_time: any;
   training_type: string[] = [];
   graphic: any;
@@ -32,7 +33,8 @@ export class StatisticsComponent implements OnInit {
               private fb: FormBuilder,
               private messageService: MessageService, private statservice: StatisticService, private graphservice: DoctorDataService,
               private route: ActivatedRoute,
-              public auth: AuthService
+              public auth: AuthService,
+              private translate: TranslatingService
   ) {
     this.data = {
       labels: [],
@@ -46,7 +48,39 @@ export class StatisticsComponent implements OnInit {
 
       ]
     };
+    if(this.translate.language === 'en'){
 
+       this.hand.push({label: 'Select hand',  value: ''});
+       this.hand.push({label: 'Left', value: '0'});
+       this.hand.push({label: 'Right', value: '1'});
+
+   }
+       else if (this.translate.language === 'rus')
+       {
+         this.hand.push({label: 'Выбирите руку',  value: ''});
+         this.hand.push({label: 'Левая', value: '0'});
+         this.hand.push({label: 'Правая', value: '1'});
+       }
+  }
+
+  switchLanguage(string) {
+    this.translate.language = string;
+    this.translate.switchLanguage(this.translate.language);
+
+    this.hand = [];
+    if(this.translate.language === 'en'){
+      this.hand.push({label: 'Select hand',  value: ''});
+      this.hand.push({label: 'Left', value: '0'});
+      this.hand.push({label: 'Right', value: '1'});
+    }
+
+    else if (this.translate.language === 'rus')
+    {
+      this.hand.push({label: 'Выбирите руку',  value: ''});
+      this.hand.push({label: 'Левая', value: '0'});
+      this.hand.push({label: 'Правая', value: '1'});
+
+    }
   }
 
    selectData(event) {
@@ -61,21 +95,22 @@ export class StatisticsComponent implements OnInit {
   onSubmit(value: any) {
     this.data.labels = [];
     this.data.datasets[0].data = [];
-    this.statservice.GetGraph(this.id,  this.userform.value).subscribe(
-      data1 => {
-        this.body_graph = data1;
+    this.statservice.GetGraph(this.id,  value).subscribe(
+      data => {
+        this.body_graph = data;
+        if(this.body_graph.graphic.length === 0){
+          this.messageService.add({severity: 'error', summary: 'Failed', detail: 'There is no data'});
+        }
+        else {
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Diagram added'});
+          this.build_graphic();
+        }
       },
-      error1 => {
-
-        console.log(error1);
-
-
+      error => {
+        console.log(error);
       }
 
     );
-
-   setTimeout(() => {
-   }, 150);
 
     let data = this.userform.value;
     const userform = this.userform.value.val;
@@ -84,38 +119,36 @@ export class StatisticsComponent implements OnInit {
      this.userform.value.from = null;
      this.userform.value.to = null;
     }
-
-
-    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Diagram added'});
-
-
-    setTimeout(() => {
-    this.build_graphic();
-
-     }, 1200);
-
-
     this.userform.reset();
   }
 
   build_graphic()
   {
-
-
+    let oY =[], Ox = [];
       for (let i = 0; i < this.body_graph.graphic.length; i++ )
       {
-
         for (let j = 0; j < this.body_graph.graphic[i].value.length; j++)
         {
-          this.data.datasets[0].data.push(this.body_graph.graphic[i].value[j].oX);
-          this.data.labels.push(this.body_graph.graphic[i].started_time);
+          oY.push(this.body_graph.graphic[i].value[j].oX);
+          Ox.push(this.body_graph.graphic[i].started_time);
         }
       }
+      this.data = {
+        labels: Ox,
+        datasets: [
+          {
+            label: 'first dataset',
+            data: oY,
+            fill: true,
+            borderColor: '#00c093'
+          }
+
+        ]
+      };
   }
 
   ngOnInit()
   {
-
     this.subscription = this.route.params.subscribe(params => this.id = params['id']);
     this.graphservice
       .getPatient(this.id)
@@ -134,17 +167,23 @@ export class StatisticsComponent implements OnInit {
       'from2': new FormControl('',  ),
       'to2': new FormControl('',  )
     });
-    this.hand = [];
-    this.hand.push({label: 'Select hand',  value: ''});
-    this.hand.push({label: 'Left', value: '0'});
-    this.hand.push({label: 'Right', value: '1'});
+
 
   }
 
   reset() {
- // this.data.labels = [];
- // this.data.datasets[1] = [];
+    this.data = {
+      labels: [],
+      datasets: [
+        {
+          label: 'first dataset',
+          data: [],
+          fill: true,
+          borderColor: '#00c093'
+        }
+      ]
+    };
+
     this.userform.reset();
   }
-
 }

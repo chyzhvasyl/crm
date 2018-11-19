@@ -29,6 +29,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {CheckboxModule} from 'primeng/checkbox';
 import {ChartModule} from 'primeng/chart';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 // components
 import { AppComponent } from './app.component';
 import { EntryPageComponent } from './components/public/entry-page/entry-page.component';
@@ -81,7 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule, AccordionModule, MenubarModule, OrderListModule, FormsModule, HttpModule, ButtonModule, BreadcrumbModule,
     BrowserAnimationsModule, HttpModule, InputMaskModule, KeyFilterModule, ToastModule, TableModule, DialogModule, HttpClientModule,
     AppRoutingModule, FileUploadModule, ReactiveFormsModule, PanelModule,   DropdownModule,   InputTextareaModule,   TabViewModule,
-    CodeHighlighterModule, MessageModule, ListboxModule, RadioButtonModule, CheckboxModule, ChartModule, ConfirmDialogModule,
+    CodeHighlighterModule, MessageModule, ListboxModule, RadioButtonModule, CheckboxModule, ChartModule, ConfirmDialogModule, ProgressSpinnerModule,
 
     TranslateModule.forRoot({
       loader: {

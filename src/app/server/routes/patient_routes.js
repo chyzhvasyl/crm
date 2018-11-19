@@ -12,7 +12,6 @@ let multer = require('multer');
 const path = require('path');
 const UPLOAD_PATH = './uploads';
 const UPLOAD_PATH_VIDEOS = UPLOAD_PATH + '/videos';
-let mongoose = require('mongoose');
 //var randtoken = require('rand-token');
 
 
@@ -85,11 +84,12 @@ function signin(req, res) {
 // add patient
 function addPatient(req, res) {
   //let now = moment().format('DD-MM-YYYY');
+
   if(req.body.date_in || req.body.date_out){
-    req.body.date_in = moment(req.body.date_in, 'DD-MM-YYYY').format('dddd DD MMMM YYYY');
-    req.body.date_out = moment(req.body.date_out, 'DD-MM-YYYY').format('dddd DD MMMM YYYY');
+
+    // req.body.date_in = moment(req.body.date_in, 'DD-MM-YYYY').format('dddd DD MMMM YYYY');
+    // req.body.date_out = moment(req.body.date_out, 'DD-MM-YYYY').format('dddd DD MMMM YYYY');
   }
-  req.body.birthdate = moment().diff(moment(req.body.birthdate, "DD-MM-YYYY"), 'years', false);
   let userData = req.body;
   userData.doctor = req.params.id;
   let user = new patient(userData);
@@ -108,6 +108,7 @@ function addPatient(req, res) {
           active_time =+40*40;
           let payload = {exp: ttl + active_time, subject: registeredUser._id};
           let token = jwt.sign(payload, 'secretKey');
+          registeredUser.birthdate = moment().diff(moment(req.body.birthdate, "DD-MM-YYYY"), 'years', false);
           res.status(200).send({token, registeredUser});
         }
       });
@@ -164,6 +165,7 @@ router.get('/patient/:id', verifyToken, (req, res) => {
         res.json(err);
         intel.error(err);
       } else {
+        //patient.birthdate = moment().diff(moment(patient.birthdate, "DD-MM-YYYY"), 'years', false);
         res.json(patient);
         intel.info('Got single patient by id ', patient);
       }
@@ -182,6 +184,7 @@ router.get('/personal/:id', verifyToken, (req, res) => {
       } else {
         let patients = [];
         for (let i = 0; i < patient.patient.length; i++) {
+          patient.patient[i].birthdate = moment().diff(moment(patient.patient[i].birthdate, "DD-MM-YYYY"), 'years', false);
           patients.push(patient.patient[i]);
         }
         res.json(patients);
@@ -225,9 +228,6 @@ function findGraphic(req, res) {
   //let b = new Date(parse);
 //let ms_time = moment.unix(1539687129);
 //let next_time = new Date(ms_time);
- let time =1539787993;
-
-console.log('id ---', time);
   //console.log('timeeeeeee',  ms_time.subtract(5, 'days').toDate());
   console.log('moment', moment().subtract(2, 'days').toDate().getTime());
   let id = req.params.id;
@@ -275,7 +275,8 @@ console.log('id ---', time);
   //   date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())
 
   if (body.from && body.to) {
-    graphicMatchExpression['started_time'] = {$gte: moment(body.from, "YYYY-MM-DD").toDate().getTime() , $lte: moment(body.to, "YYYY-MM-DD").toDate().getTime() };
+    graphicMatchExpression['started_time'] = {$gte: moment(body.from, "YYYY-MM-DD").toDate().getTime().toString().slice(0, -3) , $lte: moment(body.to.toString().slice(0, -3), "YYYY-MM-DD").toDate().getTime() };
+    console.log('cpaka', graphicMatchExpression['started_time']);
   }
   patient.findById(id)
     .populate({

@@ -12,12 +12,13 @@ language: string;
 
 
   constructor(private translate: TranslateService, ) {
+  this.language = "en";
     translate.setDefaultLang('en');
   }
   switchLanguage(language)
 {
 
- language = this.language;
+this.language = language;
     this.translate.use(language);
   }
 }

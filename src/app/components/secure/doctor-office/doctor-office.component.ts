@@ -37,7 +37,7 @@ export class DoctorOfficeComponent implements OnInit {
   id: string;
   userform: FormGroup;
   submitted: boolean;
-  sex: SelectItem[];
+  sex: SelectItem[] = [];
   description: string;
   patients: Patients[];
   datasource: Patients[];
@@ -53,18 +53,6 @@ export class DoctorOfficeComponent implements OnInit {
   //localization
   new_patient = 'New patient';
   Add = 'Add';
-  //header_name =
-  //  {
-  //  Name:        'Name',
-  //  Age:          'Age',
-  //  Status:       'Status',
-  //  Desease:      'Desease',
-  //  Date_in:      '  Date in',
-  //  Date_out:      'Date out',
-  //  Sex:          'Sex',
-  //  Description: 'Description',
-  //    label: 'Are you sure that you want to delete these patients?'
-  //};
   label ='Are you sure that you want to delete these patients?';
   private subscription: Subscription;
   constructor(private patientService: DoctorDataService,
@@ -83,8 +71,59 @@ export class DoctorOfficeComponent implements OnInit {
 
 
     this.selectedPatient3 = [];
+    if (this.translate.language === 'en'){
+      this.Add = 'Add';
+      this.new_patient = 'New patient';
+      this.sex.push({label: 'Select Gender', value: ''});
+      this.sex.push({label: 'Male', value: 'Male'});
+      this.sex.push({label: 'Female', value: 'Female'});
+      this.cols = [
+        { field: 'fullname',    header:         'Name'   },
+        { field: 'birthdate',   header:           'Age'    },
+        { field: 'status',      header:        'Status'  },
+        { field: 'desease',     header:       'Desease'   },
+        { field: 'date_in',     header:       '  Date in'     },
+        { field: 'date_out',    header:       'Date out'      },
+        { field: 'sex',         header:           'Sex'        },
+        { field: 'description', header:  'Description'      },
 
+      ];
+    }
+    else{
+      this.sex.push({label: 'Выбирите пол', value: ''});
+      this.sex.push({label: 'Мужской', value: 'Male'});
+      this.sex.push({label: 'Женский', value: 'Female'});
+      this.new_patient = 'Новый пациент';
+      this.Add = 'Добавить';
+      this.cols = [
+        { field: 'fullname',    header:   'Имя' },
+        { field: 'birthdate',   header:   'Возраст'   },
+        { field: 'status',      header:   'Статус' },
+        { field: 'desease',     header:   'Диагноз'  },
+        { field: 'date_in',     header:   'Поступление'      },
+        { field: 'date_out',    header:   'Выписка'      },
+        { field: 'sex',         header:   'Пол'       },
+        { field: 'description', header:   'Описание'    },
+      ]
+    }
+  }
+  @HostListener('window:onbeforeunload', ['$event'])
+  clearLocalStorage(event) {
+    localStorage.clear();
+  }
 
+  switchLanguage(string) {
+
+    this.translate.language = string;
+    this.translate.switchLanguage(this.translate.language);
+    console.log(this.translate.language);
+    this.sex = [];
+    if (this.translate.language === 'en'){
+    this.Add = 'Add';
+    this.new_patient = 'New patient';
+    this.sex.push({label: 'Select Gender', value: ''});
+    this.sex.push({label: 'Male', value: 'Male'});
+    this.sex.push({label: 'Female', value: 'Female'});
     this.cols = [
       { field: 'fullname',    header:         'Name'   },
       { field: 'birthdate',   header:           'Age'    },
@@ -96,42 +135,23 @@ export class DoctorOfficeComponent implements OnInit {
       { field: 'description', header:  'Description'      },
 
     ];
-  }
-  @HostListener('window:onbeforeunload', ['$event'])
-  clearLocalStorage(event) {
-    localStorage.clear();
-  }
-
-  switchLanguage(string) {
-
-    this.translate.language = string;
-    this.translate.switchLanguage(this.translate.language);
-console.log(this.translate.language);
-  if (this.translate.language === 'en'){
-    this.Add = 'Add';
-    this.new_patient = 'New patient';
-  //      this.header_name.Name           =        'Name';
-  //      this.header_name.Age            =          'Age';
-  //      this.header_name.Status         =       'Status';
-  //      this.header_name.Desease        =      'Desease';
-  //      this.header_name.Date_in        =      '  Date in';
-  //      this.header_name.Date_out       =      'Date out';
-  //      this.header_name.Sex            =          'Sex';
-  //      this.header_name.Description    = 'Description';
-  //      this.header_name.label          = 'Are you sure that you want to delete these patients?'
    }
      else{
+    this.sex.push({label: 'Выбирите пол', value: ''});
+    this.sex.push({label: 'Мужской', value: 'Male'});
+    this.sex.push({label: 'Женский', value: 'Female'});
     this.new_patient = 'Новый пациент';
     this.Add = 'Добавить';
-  //    this.header_name.Name        = 'Имя';
-  //    this.header_name.Age         = 'Возраст';
-  //    this.header_name.Status      = 'Статус';
-  //    this.header_name.Desease     = 'Диагноз';
-  //    this.header_name.Date_in     = 'Поступление';
-  //    this.header_name.Date_out    = 'Выписка';
-  //    this.header_name.Sex         = 'Пол';
-  //    this.header_name.Description = 'Описание';
-  //    this.header_name.label       = 'Удалить этих пациэнтов?'
+    this.cols = [
+      { field: 'fullname',    header:   'Имя' },
+      { field: 'birthdate',   header:   'Возраст'   },
+      { field: 'status',      header:   'Статус' },
+      { field: 'desease',     header:   'Диагноз'  },
+      { field: 'date_in',     header:   'Поступление'      },
+      { field: 'date_out',    header:   'Выписка'      },
+      { field: 'sex',         header:   'Пол'       },
+      { field: 'description', header:   'Описание'    },
+    ]
      }
 
   }
@@ -179,38 +199,6 @@ console.log(this.translate.language);
       }
     );
 
-    //
-    // setTimeout(() => {
-    //   console.log(this.patient);
-    // },10000);
-if(this.translate.language === 'en'){
-
-  this.cols = [
-    { field: 'fullname',    header:         'Name'   },
-    { field: 'birthdate',   header:           'Age'    },
-    { field: 'status',      header:        'Status'  },
-    { field: 'desease',     header:       'Desease'   },
-    { field: 'date_in',     header:       '  Date in'     },
-    { field: 'date_out',    header:       'Date out'      },
-    { field: 'sex',         header:           'Sex'        },
-    { field: 'description', header:  'Description'      },
-
-  ];
-}else if(this.translate.language === 'rus'){
-
-  this.cols = [
-  { field: 'fullname',    header:   'Имя' },
-  { field: 'birthdate',   header:   'Возраст'   },
-  { field: 'status',      header:   'Статус' },
-  { field: 'desease',     header:   'Диагноз'  },
-  { field: 'date_in',     header:   'Поступление'      },
-  { field: 'date_out',    header:   'Выписка'      },
-  { field: 'sex',         header:   'Пол'       },
-  { field: 'description', header:   'Описание'    },
-]
-}
-
-       this.sex = [];
 
    // if(this.translate.language === 'en'){
 //
@@ -227,19 +215,16 @@ if(this.translate.language === 'en'){
    //   this.sex.push({label: 'Женский', value: 'Female'});
 //
    // }
-    this.sex.push({label: 'Select Gender', value: ''});
-    this.sex.push({label: 'Male', value: 'Male'});
-    this.sex.push({label: 'Female', value: 'Female'});
        this.userform = this.fb.group(
          {
-         'fullname': new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
-         'desease': new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+         'fullname': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(70)])),
+         'desease': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
          'date_in': new FormControl('',),
          'date_out': new FormControl(''),
-         'status': new FormControl('', Validators.compose([Validators.required, Validators.minLength(2)])),
+         'status': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
          'birthdate': new FormControl('', Validators.required),
          'sex': new FormControl('', Validators.required),
-         'description': new FormControl(''),
+         'description': new FormControl('', Validators.maxLength(6000)),
 
        });
     this.loading = true;
@@ -363,7 +348,7 @@ if(this.translate.language === 'en'){
         res => {
           localStorage.setItem('token', res.token);
          patients.unshift(res.registeredUser) ;
-          console.log(res.registeredUser);
+          console.log('res.registeredUser', res.registeredUser);
         },
         err => console.log(err)
 
@@ -372,7 +357,6 @@ if(this.translate.language === 'en'){
       // patients.unshift(this.userform.value);
     }
     this.patients = patients;
-    console.log(this.userform.value);
     this.submitted = true;
     this.displayDialog = false;
     this.messageService.add({severity: 'success', summary: 'Success', detail: 'Patient added'});

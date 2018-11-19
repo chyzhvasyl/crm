@@ -44,7 +44,7 @@
 
    <div *ngIf = "!patients">
 
-<h2 align="center" style="margin-top: 15%"> Loading...</h2>
+<h2 align="center" style="margin-top: 15%"> <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner></h2>
 
    </div>
    <div *ngIf = "patients">{{'patients' | translate}}: {{patients.length}}
@@ -141,7 +141,7 @@
 
            </div>
            <div class="ui-grid-col-12">
-             <p-message severity="error" [text]="userform.controls['fullname'].errors['required'] ? 'Name is required' : userform.controls['fullname'].errors['minlength'] ? 'Must be longer than 1 characters' : ''"
+             <p-message severity="error" [text]="userform.controls['fullname'].errors['required'] ? 'Name is required' : userform.controls['fullname'].errors['minlength'] ? 'Must be longer than 1 character' : userform.controls['fullname'].errors['maxlength'] ? 'Must be shorter than 70 characters': ''"
                         *ngIf="!userform.controls['fullname'].valid&&userform.controls['fullname'].dirty"></p-message>
            </div>
 
@@ -155,7 +155,7 @@
 
            </div>
            <div class="ui-grid-col-12 ">
-             <p-message severity="error" [text]="userform.controls['desease'].errors['required'] ? 'Desease is required' : userform.controls['desease'].errors['minlength'] ? 'Must be longer than 3 characters' : ''"
+             <p-message severity="error" [text]="userform.controls['desease'].errors['required'] ? 'Desease is required' : userform.controls['desease'].errors['minlength'] ? 'Must be longer than 1 character' : userform.controls['desease'].errors['maxlength'] ? 'Must be shorter than 5 characters' : ''"
                         *ngIf="!userform.controls['desease'].valid&&userform.controls['desease'].dirty"></p-message>
            </div>
            <div class="ui-grid-row">
@@ -163,7 +163,7 @@
                {{'datein' | translate}}:
              </div>
              <div class="ui-grid-col-10" style="">
-               <p-inputMask style="" pInputText   mask="99/99/9999" placeholder="10/10/2010"  formControlName="date_in" >
+               <p-inputMask style="" pInputText   mask="99.99.9999" placeholder="10.10.2010"  formControlName="date_in" >
                </p-inputMask>
              </div>
 
@@ -180,7 +180,7 @@
              </div>
              <div class="ui-grid-col-10">
 
-               <p-inputMask   pInputText id="date_out" mask="99/99/9999" formControlName="date_out"   placeholder="10/10/2010">
+               <p-inputMask   pInputText id="date_out" mask="99.99.9999" formControlName="date_out"   placeholder="10.10.2010">
                </p-inputMask>
              </div>
 
@@ -198,7 +198,7 @@
 
            </div>
            <div class="ui-grid-col-12">
-             <p-message severity="error" [text]="userform.controls['status'].errors['required'] ? 'Status is required' : userform.controls['status'].errors['minlength'] ? 'Must be longer than 3 characters' : ''"
+             <p-message severity="error" [text]="userform.controls['status'].errors['required'] ? 'Status is required' : userform.controls['status'].errors['minlength'] ? 'Must be longer than 1 character' : userform.controls['status'].errors['maxlength'] ? 'Must be shorter than 50 characters': ''"
                         *ngIf="!userform.controls['status'].valid&&userform.controls['status'].dirty"></p-message>
            </div>
            <div class="ui-grid-row">
@@ -206,7 +206,7 @@
                {{'birth_date' | translate}}:
              </div>
              <div class="ui-grid-col-10">
-               <p-inputMask     mask="99/99/9999"  id="birthdate" placeholder="10/10/2010" pInputText type="text" formControlName="birthdate">     </p-inputMask>
+               <p-inputMask     mask="99.99.9999"  id="birthdate" placeholder="10.10.2010" pInputText type="text" formControlName="birthdate">     </p-inputMask>
 
              </div>
 
@@ -235,7 +235,10 @@
                <textarea style="resize: none; height: 80px" pInputTextarea type="text" placeholder="Put description"  formControlName="description" ></textarea>
              </div>
            </div>
-
+           <div class="ui-grid-col-12">
+             <p-message severity="error" [text]="userform.controls['description'].errors['maxlength'] ? 'Must be shorter than 6000 characters': ''"
+                        *ngIf="!userform.controls['description'].valid&&userform.controls['description'].dirty"></p-message>
+           </div>
            <div class="ui-grid-row">
              <div class="ui-grid-col-2"></div>
              <div class="ui-grid-col-6">

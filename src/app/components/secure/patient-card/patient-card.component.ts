@@ -14,7 +14,7 @@ import { Headers } from '@angular/http';
 import {AuthService} from '../../../services/api/auth.service';
 import {TranslatingService} from '../../../services/translate.service';
 import {HttpErrorResponse} from '@angular/common/http';
-
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-patient-card',
@@ -31,6 +31,9 @@ export class PatientCardComponent implements OnInit {
   newPatient: boolean;
   form: any = {};
   files: any;
+  visibility =  false;
+  editing:string = 'Editing';
+  arrow = environment.vertical_align_bottom;
   private subscription: Subscription;
   constructor(private route: ActivatedRoute,
               private patientService: DoctorDataService,
@@ -45,14 +48,28 @@ export class PatientCardComponent implements OnInit {
     this.form = {
       name: {}
     };
+
+    if (this.translate.language === 'en'){
+      this.editing = 'Editing';
+    }
+    else{
+      this.editing = 'Редактирование';
+    }
   }
 
   switchLanguage(string) {
     this.translate.language = string;
     this.translate.switchLanguage(this.translate.language);
+    if (this.translate.language === 'en'){
+      this.editing = 'Editing';
+    }
+    else{
+      this.editing = 'Редактирование';
+    }
   }
 
   ngOnInit() {
+    console.log('this.translate.language', this.translate.language);
     // маршрутизация  либо так
     // this.id = this.route.snapshot.params['id'];
     // либо
@@ -126,6 +143,15 @@ export class PatientCardComponent implements OnInit {
   addPhoto(event) {
     let target = event.target || event.srcElement;
     this.files = target.files;
+  }
+  moreText(){
+    this.visibility=!this.visibility;
+    if(!this.visibility){
+      this.arrow = environment.vertical_align_bottom
+    }
+    else {
+      this.arrow = environment.vertical_align_top
+    }
   }
   fileChange(event, id) {
     id = this.id;
