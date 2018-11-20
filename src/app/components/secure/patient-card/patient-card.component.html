@@ -118,79 +118,261 @@
 </div>
 
 <p-dialog *ngIf="patient"  [header]="editing" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
-  <div class="ui-g ui-fluid" *ngIf="patient" >
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Name"> {{'name'| translate}}</label>
+  <form [formGroup] = "editingForm" (ngSubmit)="save(editingForm.value )"  >
+    <div class="ui-g ui-fluid" *ngIf="patient" >
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Name"> {{'name'| translate}}</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="Name"   placeholder="Fullname is required" formControlName="fullname" [(ngModel)]="patient.fullname"  />
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="Name" pKeyFilter="alpha" placeholder="Put fullname" [(ngModel)]="patient.fullname" />
+      <div class="ui-grid-col-12">
+        <p-message severity="error" [text]="editingForm.controls['fullname'].errors['required'] ? 'Name is required' : editingForm.controls['fullname'].errors['minlength'] ? 'Must be longer than 1 character' : editingForm.controls['fullname'].errors['maxlength'] ? 'Must be shorter than 70 characters': ''"
+                   *ngIf="!editingForm.controls['fullname'].valid&&editingForm.controls['fullname'].dirty"></p-message>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Desease">{{'des'| translate}}</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Desease">{{'des'| translate}}</label>
+        </div>
+        <div class="ui-g-8">
+          <input    placeholder="Put desease" pInputText id="Desease" formControlName="desease" [(ngModel)]="patient.desease"  />
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input   pKeyFilter="alpha" placeholder="Put desease" pInputText id="Desease" [(ngModel)]="patient.desease" />
+      <div class="ui-grid-col-12 ">
+        <p-message severity="error" [text]="editingForm.controls['desease'].errors['required'] ? 'Desease is required' : editingForm.controls['desease'].errors['minlength'] ? 'Must be longer than 1 character' : editingForm.controls['desease'].errors['maxlength'] ? 'Must be shorter than 5 characters' : ''"
+                   *ngIf="!editingForm.controls['desease'].valid&&editingForm.controls['desease'].dirty"></p-message>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Date in">{{'datein'| translate}}</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Date in">{{'datein'| translate}}</label>
+        </div>
+        <div class="ui-g-8"   >
+
+
+          <p-inputMask  id="Date in"   pKeyFilter="int"  pInputText   mask="99.99.9999" placeholder="10.10.2010"  formControlName="date_in"  [(ngModel)]="patient.date_in">
+          </p-inputMask>
+
+          </div>
       </div>
-      <div class="ui-g-8"   >
-        <input  pInputText id="Date in"  placeholder="10.10.2010" [(ngModel)]="patient.date_in"  />
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Date_out">{{'dateout'| translate}}</label>
+        </div>
+        <div class="ui-g-8"  >
+          <p-inputMask   pInputText id="date_out" mask="99.99.9999" formControlName="date_out" [(ngModel)]="patient.date_out"  placeholder="10.10.2010">
+          </p-inputMask>
+        </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Date_out">{{'dateout'| translate}}</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Status">{{'status'| translate}}</label>
+        </div>
+        <div class="ui-g-8">
+          <input id="Status" pInputText type="text"   placeholder="Status is required" formControlName="status" [(ngModel)]="patient.status" />
+        </div>
       </div>
-      <div class="ui-g-8"  >
-        <input  pInputText id="Date_out"   placeholder="10.10.2010" [(ngModel)]="patient.date_out" />
+      <div class="ui-grid-col-12">
+        <p-message severity="error" [text]="editingForm.controls['status'].errors['required'] ? 'Status is required' : editingForm.controls['status'].errors['minlength'] ? 'Must be longer than 1 character' : editingForm.controls['status'].errors['maxlength'] ? 'Must be shorter than 50 characters': ''"
+                   *ngIf="!editingForm.controls['status'].valid && editingForm.controls['status'].dirty"></p-message>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Status">{{'status'| translate}}</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="birthdate">{{'birthday'| translate}}</label>
+        </div>
+        <div class="ui-g-8">
+          <p-inputMask   pKeyFilter="int"    mask="99.99.9999"  id="birthdate" placeholder="10.10.2010 is required" pInputText type="text" formControlName="birthdate" [(ngModel)]="patient.birthdate">     </p-inputMask>
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pKeyFilter="alpha" placeholder="Put the status" pInputText id="Status" [(ngModel)]="patient.status" />
+      <div class="ui-grid-col-12">
+        <p-message severity="error" text="birthdate is required" *ngIf="!editingForm.controls['birthdate'].valid&&editingForm.controls['birthdate'].dirty"></p-message>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Age">{{'birthday'| translate}}</label>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Sex">{{'sex'| translate}}</label>
+        </div>
+        <div class="ui-g-8">
+
+          <p-dropdown pKeyFilter="alpha" id="Sex" [(ngModel)]="patient.sex"  [options]="sex" formControlName="sex" [autoWidth]="false"  ></p-dropdown >
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input  pKeyFilter="int" pInputText id="Age"  placeholder="10.10.2010" [(ngModel)]="patient.birthdate" />
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="Description">{{'desc'| translate}}</label>
+        </div>
+        <div class="ui-g-8">
+          <!--<input pKeyFilter="alpha" placeholder="Put description" pInputText id="Description" [(ngModel)]="patient.description" /> -->
+
+          <textarea [(ngModel)]="patient.description" id="Description" style="resize: none; height: 80px" pInputTextarea type="text" placeholder="Put description"  formControlName="description" ></textarea>
+        </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Sex">{{'sex'| translate}}</label>
+      <div class="ui-grid-col-12">
+        <p-message severity="error" [text]="editingForm.controls['description'].errors['maxlength'] ? 'Must be shorter than 6000 characters': ''"
+                   *ngIf="!editingForm.controls['description'].valid&&editingForm.controls['description'].dirty"></p-message>
       </div>
-      <div class="ui-g-8">
-        <input pKeyFilter="alpha" placeholder="Put the sex" pInputText id="Sex" [(ngModel)]="patient.sex" />
+      <div class="ui-g-12">
+        <div class="ui-g-4"></div>
+        <div class="ui-g-4">
+          <button type="submit" pButton   label="{{savePatient}}"  [disabled]="!editingForm.valid"  > </button>
+        </div>
+        <div class="ui-g-4"></div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="Description">{{'desc'| translate}}</label>
-      </div>
-      <div class="ui-g-8">
-        <!--<input pKeyFilter="alpha" placeholder="Put description" pInputText id="Description" [(ngModel)]="patient.description" /> -->
-        <textarea style="resize: none; height: 80px" pInputTextarea type="text" placeholder="Put description"  pInputText id="Description" [(ngModel)]="patient.description" ></textarea>
-      </div>
-    </div>
-  </div>
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-check" (click)="save( )" label="Save"></button>
 
     </div>
-  </p-footer>
+   <!-- <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="submit" pButton icon="fa fa-check"  label="Save"  [disabled]="!editingForm.valid"  > </button>
+
+      </div>
+    </p-footer> -->
+  </form>
+
 </p-dialog>
+
+
+
+
+
+<!--
+   <p-dialog *ngIf="patient" [header] = 'new_patient' [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
+
+
+     <form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value )"   >
+
+         <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid"  >
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'name' | translate}}:
+             </div>
+             <div class="ui-grid-col-10">
+               <input pInputText type="text" formControlName="fullname"   placeholder="Put fullname" required  />
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" [text]="userform.controls['fullname'].errors['required'] ? 'Name is required' : userform.controls['fullname'].errors['minlength'] ? 'Must be longer than 1 character' : userform.controls['fullname'].errors['maxlength'] ? 'Must be shorter than 70 characters': ''"
+                        *ngIf="!userform.controls['fullname'].valid&&userform.controls['fullname'].dirty"></p-message>
+           </div>
+
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'des' | translate}}:
+             </div>
+             <div class="ui-grid-col-10">
+               <input pInputText type="text"    placeholder="Put desease" formControlName="desease"   />
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12 ">
+             <p-message severity="error" [text]="userform.controls['desease'].errors['required'] ? 'Desease is required' : userform.controls['desease'].errors['minlength'] ? 'Must be longer than 1 character' : userform.controls['desease'].errors['maxlength'] ? 'Must be shorter than 5 characters' : ''"
+                        *ngIf="!userform.controls['desease'].valid&&userform.controls['desease'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'datein' | translate}}:
+             </div>
+             <div class="ui-grid-col-10" style="">
+               <p-inputMask style="" pInputText   mask="99.99.9999" placeholder="10.10.2010"  formControlName="date_in" >
+               </p-inputMask>
+             </div>
+
+
+
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="Date is required" *ngIf="!userform.controls['date_in'].valid&&userform.controls['date_in'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'dateout' | translate}}:
+             </div>
+             <div class="ui-grid-col-10">
+
+               <p-inputMask   pInputText id="date_out" mask="99.99.9999" formControlName="date_out"   placeholder="10.10.2010">
+               </p-inputMask>
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="Date is required" *ngIf="!userform.controls['date_out'].valid&&userform.controls['date_out'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'status' | translate}}:
+             </div>
+             <div class="ui-grid-col-10">
+               <input pInputText type="text" pKeyFilter="alpha" placeholder="Put the status" formControlName="status"    />
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" [text]="userform.controls['status'].errors['required'] ? 'Status is required' : userform.controls['status'].errors['minlength'] ? 'Must be longer than 1 character' : userform.controls['status'].errors['maxlength'] ? 'Must be shorter than 50 characters': ''"
+                        *ngIf="!userform.controls['status'].valid&&userform.controls['status'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'birth_date' | translate}}:
+             </div>
+             <div class="ui-grid-col-10">
+               <p-inputMask     mask="99.99.9999"  id="birthdate" placeholder="10.10.2010" pInputText type="text" formControlName="birthdate">     </p-inputMask>
+
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="birthdate is required" *ngIf="!userform.controls['birthdate'].valid&&userform.controls['birthdate'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'sex' | translate}}:
+             </div>
+             <div class="ui-grid-col-10">
+               <p-dropdown pKeyFilter="alpha"   [options]="sex" formControlName="sex" [autoWidth]="false"  ></p-dropdown >
+             </div>
+
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" text="Sex is required" *ngIf="!userform.controls['sex'].valid&&userform.controls['sex'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2">
+               {{'desc' | translate}}:
+             </div>
+             <div class="ui-grid-col-10">
+
+               <textarea style="resize: none; height: 80px" pInputTextarea type="text" placeholder="Put description"  formControlName="description" ></textarea>
+             </div>
+           </div>
+           <div class="ui-grid-col-12">
+             <p-message severity="error" [text]="userform.controls['description'].errors['maxlength'] ? 'Must be shorter than 6000 characters': ''"
+                        *ngIf="!userform.controls['description'].valid&&userform.controls['description'].dirty"></p-message>
+           </div>
+           <div class="ui-grid-row">
+             <div class="ui-grid-col-2"></div>
+             <div class="ui-grid-col-6">
+               <button pButton type="submit" [label]="Add"   [disabled]="!userform.valid"></button>
+             </div>
+             <div class="ui-grid-col-4"></div>
+           </div>
+
+          </div>
+
+      </form>
+<!--
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="submit" pButton icon="fa fa-check"  label="Save"></button>
+
+
+        </div>
+
+      </p-footer>
+-->
+
+
+
+
 <p-toast [style]="{marginTop: '180px'}" position="top-right"    ></p-toast>
 

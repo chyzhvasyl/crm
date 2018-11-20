@@ -77,17 +77,7 @@ export class DoctorOfficeComponent implements OnInit {
       this.sex.push({label: 'Select Gender', value: ''});
       this.sex.push({label: 'Male', value: 'Male'});
       this.sex.push({label: 'Female', value: 'Female'});
-      this.cols = [
-        { field: 'fullname',    header:         'Name'   },
-        { field: 'birthdate',   header:           'Age'    },
-        { field: 'status',      header:        'Status'  },
-        { field: 'desease',     header:       'Desease'   },
-        { field: 'date_in',     header:       '  Date in'     },
-        { field: 'date_out',    header:       'Date out'      },
-        { field: 'sex',         header:           'Sex'        },
-        { field: 'description', header:  'Description'      },
-
-      ];
+      this.cols = this.translate.englishCols
     }
     else{
       this.sex.push({label: 'Выбирите пол', value: ''});
@@ -95,16 +85,7 @@ export class DoctorOfficeComponent implements OnInit {
       this.sex.push({label: 'Женский', value: 'Female'});
       this.new_patient = 'Новый пациент';
       this.Add = 'Добавить';
-      this.cols = [
-        { field: 'fullname',    header:   'Имя' },
-        { field: 'birthdate',   header:   'Возраст'   },
-        { field: 'status',      header:   'Статус' },
-        { field: 'desease',     header:   'Диагноз'  },
-        { field: 'date_in',     header:   'Поступление'      },
-        { field: 'date_out',    header:   'Выписка'      },
-        { field: 'sex',         header:   'Пол'       },
-        { field: 'description', header:   'Описание'    },
-      ]
+      this.cols = this.translate.russianCols
     }
   }
   @HostListener('window:onbeforeunload', ['$event'])
@@ -124,17 +105,7 @@ export class DoctorOfficeComponent implements OnInit {
     this.sex.push({label: 'Select Gender', value: ''});
     this.sex.push({label: 'Male', value: 'Male'});
     this.sex.push({label: 'Female', value: 'Female'});
-    this.cols = [
-      { field: 'fullname',    header:         'Name'   },
-      { field: 'birthdate',   header:           'Age'    },
-      { field: 'status',      header:        'Status'  },
-      { field: 'desease',     header:       'Desease'   },
-      { field: 'date_in',     header:       '  Date in'     },
-      { field: 'date_out',    header:       'Date out'      },
-      { field: 'sex',         header:           'Sex'        },
-      { field: 'description', header:  'Description'      },
-
-    ];
+    this.cols = this.translate.englishCols
    }
      else{
     this.sex.push({label: 'Выбирите пол', value: ''});
@@ -142,16 +113,7 @@ export class DoctorOfficeComponent implements OnInit {
     this.sex.push({label: 'Женский', value: 'Female'});
     this.new_patient = 'Новый пациент';
     this.Add = 'Добавить';
-    this.cols = [
-      { field: 'fullname',    header:   'Имя' },
-      { field: 'birthdate',   header:   'Возраст'   },
-      { field: 'status',      header:   'Статус' },
-      { field: 'desease',     header:   'Диагноз'  },
-      { field: 'date_in',     header:   'Поступление'      },
-      { field: 'date_out',    header:   'Выписка'      },
-      { field: 'sex',         header:   'Пол'       },
-      { field: 'description', header:   'Описание'    },
-    ]
+    this.cols = this.translate.russianCols
      }
 
   }
@@ -218,7 +180,7 @@ export class DoctorOfficeComponent implements OnInit {
        this.userform = this.fb.group(
          {
          'fullname': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(70)])),
-         'desease': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
+         'desease': new FormControl('', Validators.compose([Validators.minLength(1), Validators.maxLength(50)])),
          'date_in': new FormControl('',),
          'date_out': new FormControl(''),
          'status': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),

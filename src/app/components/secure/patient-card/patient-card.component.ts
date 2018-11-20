@@ -15,7 +15,8 @@ import {AuthService} from '../../../services/api/auth.service';
 import {TranslatingService} from '../../../services/translate.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-
+import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import {SelectItem} from "../doctor-office/selectitem";
 @Component({
   selector: 'app-patient-card',
   templateUrl: './patient-card.component.html',
@@ -31,9 +32,12 @@ export class PatientCardComponent implements OnInit {
   newPatient: boolean;
   form: any = {};
   files: any;
+  sex: SelectItem[] = [];
   visibility =  false;
   editing:string = 'Editing';
+  savePatient = 'Save';
   arrow = environment.vertical_align_bottom;
+  editingForm: FormGroup;
   private subscription: Subscription;
   constructor(private route: ActivatedRoute,
               private patientService: DoctorDataService,
@@ -43,17 +47,24 @@ export class PatientCardComponent implements OnInit {
               private http: Http,
               public auth: AuthService,
               private translate: TranslatingService,
-              private router: Router
+              private router: Router,
+              private fb: FormBuilder
   ) {
     this.form = {
       name: {}
     };
+    this.sex = [];
+    this.sex.push({label: 'Select Gender', value: ''});
+    this.sex.push({label: 'Male', value: 'Male'});
+    this.sex.push({label: 'Female', value: 'Female'});
 
     if (this.translate.language === 'en'){
       this.editing = 'Editing';
+
     }
     else{
       this.editing = 'Редактирование';
+      this.savePatient = 'Сохранить';
     }
   }
 
@@ -62,9 +73,12 @@ export class PatientCardComponent implements OnInit {
     this.translate.switchLanguage(this.translate.language);
     if (this.translate.language === 'en'){
       this.editing = 'Editing';
+      this.savePatient = 'Сохранить';
+      this.savePatient = 'Save';
     }
     else{
       this.editing = 'Редактирование';
+      this.savePatient = 'Сохранить';
     }
   }
 
@@ -93,6 +107,21 @@ export class PatientCardComponent implements OnInit {
         }
 
       );
+
+
+    this.editingForm = this.fb.group(
+      {
+        'fullname': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(70)])),
+        'desease': new FormControl('', Validators.compose([Validators.minLength(1), Validators.maxLength(50)])),
+        'date_in': new FormControl('',),
+        'date_out': new FormControl(''),
+        'status': new FormControl('', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)])),
+        'birthdate': new FormControl('', Validators.required),
+        'sex': new FormControl('', Validators.required),
+        'description': new FormControl('', Validators.maxLength(6000)),
+
+      });
+
   }
 
   backClicked() {

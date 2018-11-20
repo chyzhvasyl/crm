@@ -40,7 +40,7 @@ export class StatisticsComponent implements OnInit {
       labels: [],
       datasets: [
         {
-          label: 'first dataset',
+          label: 'Degree / time',
           data: [],
           fill: true,
           borderColor: '#00c093'
@@ -137,7 +137,7 @@ export class StatisticsComponent implements OnInit {
         labels: Ox,
         datasets: [
           {
-            label: 'first dataset',
+            label: 'Degree / time',
             data: oY,
             fill: true,
             borderColor: '#00c093'
@@ -160,7 +160,7 @@ export class StatisticsComponent implements OnInit {
     /* форма для получения графика */
     this.userform = this.fb.group({
       'hand': new FormControl('', Validators.required),
-      'training_type': new FormControl('',   ),
+      'training_type': new FormControl('',  Validators.required ),
       'val': new FormControl('', Validators.required),
       'from': new FormControl('',  ),
       'to': new FormControl('',  ),
@@ -176,7 +176,7 @@ export class StatisticsComponent implements OnInit {
       labels: [],
       datasets: [
         {
-          label: 'first dataset',
+          label: 'Degree / time',
           data: [],
           fill: true,
           borderColor: '#00c093'

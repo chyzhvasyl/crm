@@ -31,8 +31,8 @@ input, p-inputMask {
 }
 
 .substrate_more{
-  background-color: whitesmoke; border-radius: 5px;
-
+  background-color: whitesmoke;
+  border-radius: 5px;
   white-space: normal;
   overflow: hidden;
   text-overflow: clip;

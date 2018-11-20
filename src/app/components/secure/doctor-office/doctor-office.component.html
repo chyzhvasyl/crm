@@ -1,5 +1,5 @@
 <nav class="navbar   " style="background-color: darkslategrey">
-  <a   class="navbar-brand" href="/">  <img class=" img-fluid" src=" ../../../../assets/img/logo_light.png" height= "auto" width="300px" >  </a>
+  <a   class="navbar-brand" >  <img class=" img-fluid" src=" ../../../../assets/img/logo_light.png" height= "auto" width="300px" >  </a>
   <div class="form-inline" >
     <div  class="btn-group dropleft mr-3">
       <button class="btn btn-success dropdown-toggle    " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -136,7 +136,7 @@
                {{'name' | translate}}:
              </div>
              <div class="ui-grid-col-10">
-               <input pInputText type="text" formControlName="fullname"   placeholder="Put fullname" required  />
+               <input pInputText type="text" formControlName="fullname"   placeholder="Fullname is required" required  />
              </div>
 
            </div>
@@ -193,7 +193,7 @@
                {{'status' | translate}}:
              </div>
              <div class="ui-grid-col-10">
-               <input pInputText type="text" pKeyFilter="alpha" placeholder="Put the status" formControlName="status"    />
+               <input pInputText type="text" pKeyFilter="alpha" placeholder="Status is required" formControlName="status"    />
              </div>
 
            </div>
@@ -206,7 +206,7 @@
                {{'birth_date' | translate}}:
              </div>
              <div class="ui-grid-col-10">
-               <p-inputMask     mask="99.99.9999"  id="birthdate" placeholder="10.10.2010" pInputText type="text" formControlName="birthdate">     </p-inputMask>
+               <p-inputMask     mask="99.99.9999"  id="birthdate" placeholder="10.10.2010 is required" pInputText type="text" formControlName="birthdate">     </p-inputMask>
 
              </div>
 
